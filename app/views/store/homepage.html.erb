@@ -3,3 +3,9 @@
     <%= current_user.first_name %>
   <% end %>
 </h1>
+
+</br>
+<% @live_deals&.each do |deal| %>
+  <%= render deal %>
+  </br>
+<% end %>

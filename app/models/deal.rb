@@ -19,6 +19,8 @@ class Deal < ApplicationRecord
   scope :live, ->{ where(publishable: true).where.not(published_at: nil) }
   scope :expired, ->{ where(publishable: false).where.not(published_at: nil) }
   scope :publishable_on, ->(date) { where(publish_at: date) }
+  scope :to_publish, ->{ where('DATE(publish_at) = ?', Date.current).where(published_at: nil).where(publishable: true) }
+  scope :to_unpublish, ->{ where('DATE(publish_at) = ?', Date.yesterday).where.not(published_at: nil).where(publishable: true) }
 
 
   def price
