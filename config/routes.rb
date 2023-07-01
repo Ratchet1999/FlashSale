@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :orders do
     member do
       post 'payment'
+      post 'cancel_order', as: 'cancel'
       get 'success'
       get 'cancel'
       get 'checkout'
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
 
     controller :users do
       get 'my_orders' => :my_orders
+      post 'cancel_order/:id' => :cancel_order
     end
   end
 

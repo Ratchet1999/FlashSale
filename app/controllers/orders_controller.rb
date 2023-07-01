@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[show edit update destroy payment success cancel]
+  before_action :set_order, only: %i[show edit update destroy payment success cancel cancel_order]
   before_action :set_line_item, only: [:remove_from_cart]
   before_action :set_deal, only: [:add_to_cart]
 
@@ -113,6 +113,25 @@ class OrdersController < ApplicationController
   def cancel
     @order.payments.last.failed!
     redirect_to checkout_order_path, alert: 'Payment was cancelled'
+  end
+
+  def cancel_order
+    if Deal.expiring_soon(@order)
+      flash[:notice] = "Order can't be cancelled 30 minutes before the deal ends"
+    else
+      refund_session = StripeRefundHandler.new(@order)
+      refund = refund_session.create_refund
+      unless refund.messages[:alert]
+        @order.cancel_order(refund)
+        @order.line_items.each do |line_item|
+          line_item.deal.increment!(:quantity)
+        end
+        flash[:notice] = refund.messages[:notice]
+      else
+        flash[:notice] = refund.messages[:alert]
+      end
+    end
+    redirect_back fallback_location: order_path(@order)
   end
 
   private 
