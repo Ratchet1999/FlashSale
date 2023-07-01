@@ -1,4 +1,5 @@
 class Api::DealsController < Api::BaseController
+  
   def live 
     render json: Deal.live, each_serializer: DealSerializer
   end

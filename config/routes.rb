@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :orders
+    member do
+      delete :soft_delete
+    end
   end
 
   resources :addresses, only: [:new, :create]
@@ -50,8 +53,11 @@ Rails.application.routes.draw do
         get 'customers' => :customers
       end
     end
-
-    resources :users
+    resources :users do
+      member do
+        delete :soft_delete
+      end
+    end
     resources :orders do
       member do
         post 'deliver', to: 'orders#deliver_order'

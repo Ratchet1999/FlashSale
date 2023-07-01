@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Discard::Model
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
@@ -18,5 +20,13 @@ class User < ApplicationRecord
 
   def generate_auth_token
     regenerate_auth_token
+  end
+
+  def soft_delete
+    update(deactivated_at: Time.current)
+  end
+  
+  def active_for_authentication?
+    super && deactivated_at.nil?
   end
 end

@@ -25,4 +25,6 @@
     <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
+<%= button_to "Deactivate User", soft_delete_admin_user_path(@user), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+</br>
 <%= button_to 'Back to Users', admin_users_path, method: :get, class: "btn btn-primary" %>

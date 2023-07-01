@@ -16,6 +16,8 @@ gem 'sidekiq-scheduler', "~> 5.0.3"
 
 gem 'active_model_serializers', '~> 0.10.0'
 
+gem 'discard', '~> 1.2'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 

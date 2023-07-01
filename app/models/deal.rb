@@ -54,7 +54,11 @@ class Deal < ApplicationRecord
   def calculate_tax_on_deal
     self.tax_in_cents = discount_price * tax_percentage
   end
-  
+
+  def expiring_soon?
+    published_at + LIVE_DEAL_DURATION - Time.current < MINIMUM_TIME_TO_CANCEL_ORDER
+  end
+
   private
   
   def images_count
@@ -71,9 +75,5 @@ class Deal < ApplicationRecord
         errors.add :base, "Cannot update publish time 24 hours before deal going live"
       end
     end
-  end
-
-  def expiring_soon?
-    published_date + TWENTY_FOUR_HOURS - Time.current < THIRTY_MINUTES
   end
 end

@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy soft_delete]
   
   def index
     @users = User.all
@@ -25,6 +25,11 @@ class Admin::UsersController < Admin::BaseController
     else
       render :new, status: :unprocessable_entity 
     end
+  end
+
+  def soft_delete
+    @user.discard!
+    redirect_to admin_users_path, notice: 'User soft deleted.'
   end
 
   private 
