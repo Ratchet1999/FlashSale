@@ -14,6 +14,10 @@ class StripeHandler
     )
   end
 
+  def self.retrieve_session(order)
+    Stripe::Checkout::Session.retrieve(order.payments.last.session_id)
+  end
+
   def generate_line_items
     @order.line_items.map do |line_item|
       { quantity: 1,

@@ -17,6 +17,7 @@ class Admin::DealsController < Admin::BaseController
 
   def create
     @deal = Deal.new(deal_params)
+    @deal.calculate_tax_on_deal
     if @deal.save
       redirect_to admin_deals_path, notice: "Deal was successfully created."
     else
@@ -25,6 +26,7 @@ class Admin::DealsController < Admin::BaseController
   end
 
   def update
+    @deal.calculate_tax_on_deal
     if @deal.update(deal_params)
       redirect_to admin_deals_path, notice: "Deal was successfully updated."
     else

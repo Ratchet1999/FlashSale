@@ -1,0 +1,27 @@
+<h3>Top Spending Customers</h3>
+<%= form_tag admin_reports_customers_path , method: :get do %>
+  <div class="input-group mb-3">
+  <%= date_field_tag :from, params[:from], class: "form-control", placeholder: "Search orders by email", aria: { label: "From Date" } %>
+  <%= date_field_tag :to, params[:to], class: "form-control", placeholder: "Search orders by email", aria: { label: "To Date" } %>
+    <div class="input-group-append">
+      <%= button_tag "Search", class: "btn btn-primary", type: "submit" %>
+    </div>
+  </div>
+<% end %>
+</br>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Customer ID</th>
+        <th>Name</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @customers&.each do |customer| %>
+        <tr><%= render 'customer', customer: customer %></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
