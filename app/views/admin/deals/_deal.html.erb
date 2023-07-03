@@ -1,0 +1,35 @@
+<div id="<%= dom_id deal %>">
+  <u><%= link_to "#{deal.title}", admin_deal_path(deal) %></u>
+  </br>
+
+  <div>
+    <% deal.deal_images.each do |deal_image| %>
+      <%= image_tag(url_for(deal_image.image)) %>
+    <% end %>
+  </div>
+
+  <div>
+    <strong>Description </strong>
+    <%= deal.description %>
+  </div>
+
+  <div>
+    <strong>Quantity</strong>
+    <%= deal.quantity %>
+  </div>
+
+  <div>
+    <strong>Original Price</strong>
+    <s><%= price_in_currency(deal.price) %></s>
+  </div>
+
+  <div>
+    <strong>Deal Price</strong>
+    <%= price_in_currency(deal.discount_price) %>
+  </div>
+
+  <div>
+    <strong>Publishable: </strong>
+    <%= deal.valid?(:publish) ? "YES" : "NO" %>
+  </div>
+</div>

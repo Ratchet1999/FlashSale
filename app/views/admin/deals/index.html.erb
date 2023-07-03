@@ -1,0 +1,9 @@
+<h1>Welcome <%= current_user.first_name %> </h1>
+</br>
+<%= link_to 'Add New Deals', new_admin_deal_path %>
+</br>
+</br>
+<% @deals.each_with_index do |deal, index| %>
+  <%= render deal, index: index %>
+  </br>
+<% end %>
