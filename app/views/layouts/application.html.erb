@@ -16,7 +16,7 @@
     <nav class="navbar navbar-light bg-light">
       <%= link_to 'HomePage', root_path%>
       <% if user_signed_in? %>
-        <%= link_to 'Edit Profile', edit_user_registration_path %>
+        <%= link_to 'Profile', profile_path %>
         <%= link_to 'Cart', cart_order_path(current_order.id) %>
         <%= link_to 'My Orders', user_orders_path(current_user) %>
         <%= button_to 'Log out', destroy_user_session_path, method: :delete %>

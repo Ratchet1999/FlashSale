@@ -1,0 +1,29 @@
+<div class="row mb-3">
+  <div class="col-md-6">
+    <strong>Name:</strong>
+    <%= "#{current_user.first_name} #{current_user.last_name}" %>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <strong>Email:</strong>
+    <%= current_user.email %>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <strong>Authorization Token:</strong>
+    <%= current_user.auth_token %>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <strong>Number of Completed Orders:</strong>
+    <%= current_user.orders.Delivered.size %>
+  </div>
+</div>
+
+<%= button_to 'Edit Profile', edit_user_registration_path, method: :get, class: 'btn btn-primary' %>
