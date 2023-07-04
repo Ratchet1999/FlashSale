@@ -28,3 +28,11 @@ nav a {
   text-transform: uppercase;
   font-size: 14px;
 }
+
+.bg-custom {
+  background-color: skyblue;
+}
+
+.back-colour {
+  background-color: white;
+}

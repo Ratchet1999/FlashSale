@@ -3,9 +3,20 @@
     <%= current_user.first_name %>
   <% end %>
 </h1>
-
+</br>
+<%= link_to 'View Previous Deals', past_deals_path %>
 </br>
 <% @live_deals&.each do |deal| %>
+  <%= render deal %>
+  <% if deal.quantity.zero? %>
+    <button disabled>Sold Out</button>
+  <% else %>
+    <%= button_to 'Buy', add_to_cart_order_path(deal), id: "deal_button_#{deal.id}" %>
+  <% end %>
+  </br>
+<% end %>
+
+<% @expired_deals&.each do |deal| %>
   <%= render deal %>
   </br>
 <% end %>

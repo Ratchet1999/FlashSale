@@ -8,6 +8,8 @@ gem "devise", "~> 4.9.2"
 
 gem 'pg'
 
+gem 'stripe', '~> 8.5.0'
+
 gem 'sidekiq', "~> 6.0.0"
 
 gem 'sidekiq-scheduler', "~> 5.0.3"

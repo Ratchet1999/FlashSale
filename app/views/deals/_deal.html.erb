@@ -1,11 +1,9 @@
 <div id="<%= dom_id deal %>">
-  <u><%= link_to "#{deal.title}", admin_deal_path(deal) %></u>
+  <h4><u><%= "#{deal.title}" %></u></h4>
   </br>
 
   <div>
-    <% deal.deal_images.each do |deal_image| %>
-      <%= image_tag(url_for(deal_image.image)) %>
-    <% end %>
+    <%= render 'deals/image', deal: deal %>
   </div>
 
   <div>

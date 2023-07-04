@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_22_082902) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_24_183715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,17 +43,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_082902) do
   end
 
   create_table "addresses", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.string "name"
     t.string "email"
-    t.bigint "user_id"
-    t.bigint "order_id"
     t.string "city"
     t.string "state"
     t.string "country"
     t.integer "pincode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_addresses_on_order_id"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
@@ -76,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_082902) do
     t.decimal "tax_percentage", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "tax_in_cents", default: 0
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -84,6 +83,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_082902) do
     t.integer "quantity"
     t.integer "price_in_cents"
     t.integer "discount_price_in_cents"
+    t.integer "tax_in_cents"
+    t.integer "total_in_cents"
+    t.integer "total_discount_price_in_cents"
+    t.integer "net_in_cents"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deal_id"], name: "index_line_items_on_deal_id"
@@ -93,7 +96,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_082902) do
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "address_id"
-    t.date "order_date"
+    t.datetime "order_at"
+    t.integer "total_in_cents", default: 0
+    t.integer "tax_in_cents", default: 0
+    t.integer "discount_price_in_cents", default: 0
+    t.integer "loyality_discount_in_cents", default: 0
+    t.integer "net_in_cents", default: 0
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -102,14 +110,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_082902) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.bigint "order_id"
-    t.string "payment_intent"
+    t.bigint "order_id", null: false
+    t.string "session_id"
     t.string "currency"
     t.integer "status"
     t.integer "total_amount_in_cents"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "session_id"
     t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
@@ -148,9 +155,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_082902) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "users"
   add_foreign_key "deal_images", "deals"
   add_foreign_key "line_items", "deals"
   add_foreign_key "line_items", "orders"
   add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "users"
+  add_foreign_key "payments", "orders"
 end

@@ -1,0 +1,24 @@
+<div id="<%= dom_id line_item %>">
+  <u><%= link_to "#{Deal.find(line_item.deal_id).title}" %></u>
+  </br>
+
+  <div>
+    <%= render 'deals/image', deal: Deal.find(line_item.deal_id)%>
+  <div>
+ 
+  <div>
+    <strong>Original Price</strong>
+    <s><%= price_in_currency(line_item.price) %></s>
+  </div>
+
+  <div>
+    <strong>Deal Price</strong>
+    <%= price_in_currency(line_item.discount_price) %>
+  </div>
+
+  <div>
+    <strong>Quantity</strong>
+    <%= line_item.quantity %>
+  </div>
+
+</div>

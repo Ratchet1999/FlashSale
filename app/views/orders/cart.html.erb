@@ -1,0 +1,33 @@
+<h1>Order Summary</h1>
+<% @order.line_items.each do |line_item| %>
+  <%= render line_item %>
+  <%= button_to 'Remove' , remove_from_cart_order_path(line_item) %>
+  </br>
+<% end %>
+</br>
+<div>
+  <strong>Order Total</strong>
+  <%= price_in_currency(@order.order_total) %>
+</div>
+
+<div>
+  <strong>Discount Price</strong>
+  <%= price_in_currency(@order.discount_price) %>
+</div>
+
+<div>
+  <strong>Tax amount</strong>
+  <%= price_in_currency(@order.total_tax) %>
+</div>
+
+<div>
+  <strong>Loyality Bonus</strong>
+  <%= price_in_currency(@order.loyality_bonus) %>
+</div>
+
+<div>
+  <strong>Net Total</strong>
+  <%= price_in_currency(@order.net_total) %>
+</div>
+</br>
+<%= button_to 'Place Order', checkout_order_path(@order), method: :get %>

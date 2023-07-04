@@ -1,0 +1,25 @@
+<h3><u>Shipping Details</u></h3>
+</br>
+<%= form_with model: @order do |form| %>
+  <%= render 'shared/errors', object: @order %>
+  
+  <% if current_user.addresses.any? %>
+    <div class="btn-group-vertical" data-toggle="buttons">
+      <%= form.collection_radio_buttons :address_id, current_user.addresses, :id, :name, checked: current_user.addresses.last.id do |address| %>
+        <div class="btn btn-secondary back-colour">
+          <div class="card card-body bg-custom">
+            <%= address.radio_button %>
+            <%= render address.object  %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit 'Checkout', data: { turbo: false } %>
+  </div>
+<% end %>
+</br>
+
+<%= link_to 'Add new Address', new_address_path %>
