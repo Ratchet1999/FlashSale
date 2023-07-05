@@ -1,0 +1,23 @@
+<div>
+  <h4><u><%= "Order #{order.id}" %></u></h4>
+  </br>
+
+  <div>
+    <strong>Name</strong>
+    <%= order.address.name %>
+  </div>
+
+  <div>
+    <strong>Total amount</strong>
+    <%= price_in_currency(order.payments.successful.first.total_amount) %>
+  </div>
+
+  <div>
+    <strong>Status</strong>
+    <%= order.status %>
+  </div>
+
+  <div>
+    <%= link_to 'Order Details', order_path(order) %>
+  </div>
+</div>

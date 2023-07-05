@@ -1,0 +1,30 @@
+<%= form_with(model: [:admin, @user], class: "form") do |form| %>
+  <%= render 'shared/errors', object: @user %>
+
+  <div class="form-group">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :role %>
+    <%= form.collection_radio_buttons :role, [['Admin', 'Admin'], ['Customer', 'customer']], :last, :first, class: 'form-check-input' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
+<%= button_to "Deactivate User", deactivate_admin_user_path(@user), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+</br>
+<%= button_to 'Back to Users', admin_users_path, method: :get, class: "btn btn-primary" %>

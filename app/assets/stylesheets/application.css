@@ -13,3 +13,26 @@
  *= require_tree .
  *= require_self
  */
+
+header{
+  background: #55d6aa;
+}
+
+nav {
+  color: #b22525;
+}
+
+nav a {
+  color: #e21212;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.bg-custom {
+  background-color: skyblue;
+}
+
+.back-colour {
+  background-color: white;
+}

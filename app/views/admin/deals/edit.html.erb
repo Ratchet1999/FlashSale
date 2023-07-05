@@ -1,0 +1,9 @@
+<h1>Editing deal</h1>
+
+<%= render "form", deal: @deal %>
+<br>
+
+<div>
+  <%= link_to "Show this deal", admin_deal_path(@deal) %> |
+  <%= link_to "Back to deals", admin_deals_path %>
+</div>

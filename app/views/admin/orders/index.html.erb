@@ -1,0 +1,27 @@
+<%= form_tag admin_orders_path , method: :get do %>
+  <div class="input-group mb-3">
+  <%= text_field_tag :email, params[:email], class: "form-control", placeholder: "Search orders by email", aria: { label: "Search orders by email" } %>
+    <div class="input-group-append">
+      <%= button_tag "Search", class: "btn btn-primary", type: "submit" %>
+    </div>
+  </div>
+<% end %>
+</br>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr><%= render order %></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

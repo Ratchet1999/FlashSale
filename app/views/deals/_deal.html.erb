@@ -1,0 +1,23 @@
+<div id="<%= dom_id deal %>">
+  <h4><u><%= "#{deal.title}" %></u></h4>
+  </br>
+
+  <div>
+    <%= render 'deals/image', deal: deal %>
+  </div>
+
+  <div>
+    <strong>Description </strong>
+    <%= deal.description %>
+  </div>
+
+  <div>
+    <strong>Original Price</strong>
+    <s><%= price_in_currency(deal.price) %></s>
+  </div>
+
+  <div>
+    <strong>Deal Price</strong>
+    <%= price_in_currency(deal.discount_price) %>
+  </div>
+</div>

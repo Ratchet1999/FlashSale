@@ -1,0 +1,5 @@
+<td><%= "#{user.first_name} #{user.last_name}" %></td>
+<td><%= user.email %></td>
+<td><%= user.role %></td>
+<td><%= user.discarded_at.nil? ? "Active" : "Deactivated" %></td>
+<td><%= button_to 'Edit User', edit_admin_user_path(user.id), method: :get, class: "btn btn-primary" %></td>

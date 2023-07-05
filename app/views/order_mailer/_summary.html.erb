@@ -1,0 +1,12 @@
+<h1>Order Summary</h1>
+<% order.line_items.each do |line_item| %>
+  <%= image_tag attachments["#{line_item.id}_first.jpg"].url %>
+  <h2>Product: <%= line_item.deal.title %></h2>
+  <p>Quantity: <%= line_item.quantity %></p>
+  <p>Price: <%= (line_item.net_price).to_fs(:currency, unit: '₹', format: '%u %n') %></p>
+<% end %>
+</br>
+<strong>Order Total</strong>
+<%= (order.net_total).to_fs(:currency, unit: '₹', format: '%u %n') %>
+
+

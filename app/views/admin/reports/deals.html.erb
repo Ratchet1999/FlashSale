@@ -1,0 +1,19 @@
+Deals Revenue
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Deal ID</th>
+        <th>Title</th>
+        <th>Total Revenue</th>
+        <th>Minimum Potiential</th>
+        <th>Maximum Potiential</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @deals.each do |deal| %>
+        <tr><%= render 'deal', deal: deal %></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

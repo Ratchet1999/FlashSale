@@ -1,0 +1,51 @@
+<%= form_with model: @address do |form| %>
+  <% if @address.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@address.errors.count, "error") %> prohibited this order from being placed:</h2>
+
+      <ul>
+        <% @address.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-control">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="form-control">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="form-control">
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="form-control">
+    <%= form.label :state %>
+    <%= form.text_field :state %>
+  </div>
+    
+  <div class="form-control">
+    <%= form.label :country %>
+    <%= form.text_field :country %>
+  </div> 
+    
+  <div class="form-control">
+    <%= form.label :pincode %>
+    <%= form.text_field :pincode %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+  <div>
+    <%= form.submit 'Add Address', data: { turbo: false } %>
+  </div>
+<% end %>

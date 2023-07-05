@@ -13,6 +13,14 @@ class User::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def after_sign_in_path_for(resource)
+    if resource.admin?
+      admin_deals_path
+    else
+      root_path
+    end
+  end
+
   # DELETE /resource/sign_out
   # def destroy
   #   super

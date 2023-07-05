@@ -1,0 +1,54 @@
+<%= javascript_include_tag 'add_field' %>
+<%= form_with(model: [:admin, deal]) do |form| %>
+  <%= render 'shared/errors', object:deal %>
+
+  <div>
+    <%= form.label :publishable %>
+    <%= form.check_box :publishable %>
+  </div>
+
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :quantity %>
+    <%= form.text_field :quantity %>
+  </div>
+
+  <div>
+    <%= form.label :price_in_cents %>
+    <%= form.text_field :price_in_cents %>
+  </div>
+
+  <div>
+    <%= form.label :discount_price_in_cents %>
+    <%= form.text_field :discount_price_in_cents %>
+  </div>
+
+  <div>
+    <%= link_to_add_fields "Add Images", form, :deal_images %>
+  </div>
+
+  <div>
+    <%= form.label :tax_percentage %>
+    <%= form.text_field :tax_percentage %>
+  </div>
+
+  <div>
+    <%= form.label :publish_at %>
+    <%= form.datetime_field :publish_at %>
+  </div>
+
+  </br>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
