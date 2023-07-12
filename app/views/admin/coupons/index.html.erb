@@ -1,0 +1,23 @@
+<h3>Coupons</h3>
+<%= link_to 'Add new coupon', new_admin_coupon_path %>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Type</th>
+        <th>Value</th>
+        <th>Currency</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @coupons.each do |coupon| %>
+        <tr>
+          <%= render coupon %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -26,8 +26,25 @@
 </div>
 
 <div>
+  <strong>Coupon Discount</strong>
+  <%= price_in_user_currency(@order.coupon_discount) %>
+</div>
+
+<div>
   <strong>Net Total</strong>
   <%= price_in_user_currency(@order.net_total) %>
+</div>
+</br>
+<div>
+  <strong>Have a coupon code?</strong>
+  <%= form_tag apply_coupon_order_path , method: :post do %>
+    <div class="input-group mb-3">
+      <%= text_field_tag :code, params[:code], class: "form-control", placeholder: "Enter Coupon Code" %>
+      <div class="input-group-append">
+        <%= button_tag "Redeem", class: "btn btn-primary", type: "submit" %>
+      </div>
+    </div>
+  <% end %>
 </div>
 </br>
 <%= button_to 'Place Order', checkout_order_path(@order), method: :get %>

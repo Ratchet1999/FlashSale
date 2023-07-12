@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[show edit update destroy payment success cancel cancel_payment coupon cart]
+  before_action :set_order, only: %i[show edit update destroy payment success cancel cancel_payment apply_coupon cart]
   before_action :set_line_item, only: [:remove_from_cart]
   before_action :set_deal, only: [:add_to_cart]
 
@@ -133,6 +133,15 @@ class OrdersController < ApplicationController
     redirect_back fallback_location: order_path(@order)
   end
 
+  def apply_coupon
+    coupon = current_user.coupons.active.where(code: params[:code]).where('DATE(coupons.created_at) = ?', Date.current).first
+    if coupon && @order.apply_coupon(coupon)
+      redirect_to cart_order_path(@order), notice: "Coupon Applied"
+    else
+      redirect_back fallback_location: cart_order_path(@order), notice: 'Invalid Coupon'
+    end
+  end
+
   private 
 
   def set_order
@@ -145,10 +154,10 @@ class OrdersController < ApplicationController
   end 
 
   def set_deal
-    @deal = Deal.find(params[:id])
+    @deal = Deal.find_by(id: params[:id])
   end
 
   def set_line_item
-    @line_item = LineItem.find(params[:id])
+    @line_item = LineItem.find_by(id: params[:id])
   end
 end

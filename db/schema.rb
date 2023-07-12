@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_06_132451) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_12_113350) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_132451) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.string "code"
+    t.string "currency"
+    t.integer "coupon_type"
+    t.integer "value", default: 0
+    t.integer "status", default: 0
+    t.integer "redeem_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "currencies", force: :cascade do |t|
@@ -113,7 +124,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_132451) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "currency"
+    t.boolean "wishlist", default: false
+    t.bigint "coupon_id"
+    t.integer "coupon_discount_in_cents"
     t.index ["address_id"], name: "index_orders_on_address_id"
+    t.index ["coupon_id"], name: "index_orders_on_coupon_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -138,6 +153,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_132451) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_refunds_on_order_id"
+  end
+
+  create_table "user_coupons", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "coupon_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_user_coupons_on_coupon_id"
+    t.index ["user_id"], name: "index_user_coupons_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

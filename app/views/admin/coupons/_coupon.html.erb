@@ -1,0 +1,6 @@
+<td><%= coupon.code %></td>
+<td><%= coupon.coupon_type %></td>
+<td><%= coupon.value %></td>
+<td><%= coupon.currency %></td>
+<td><%= coupon.status %></td>
+<td><%= button_to coupon.active? ? 'Set inactive' : 'Set active', coupon.active? ? inactive_admin_coupon_path(coupon) : active_admin_coupon_path(coupon), class: "btn btn-primary" %></td>

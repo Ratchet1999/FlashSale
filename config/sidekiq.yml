@@ -4,3 +4,6 @@
     publishing_deals:
       cron: '0 0 10 * * *'
       class: PublishingDeals
+    coupon_notifier_job:
+      cron: '0 * * * * *'
+      class: CouponNotifierJob

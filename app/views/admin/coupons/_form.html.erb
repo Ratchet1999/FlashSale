@@ -1,0 +1,26 @@
+<%= form_with(model: [:admin, coupon]) do |form| %>
+  <%= render 'shared/errors', object: coupon %>
+
+  <div>
+    <%= form.collection_select :coupon_type, {flat: 'Flat', percent: 'Percent'}, :first, :last, include_blank: 'select coupon type' %>
+  </div>
+
+    <div>
+    <%= form.label :code %>
+    <%= form.text_field :code %>
+  </div>
+
+  <div>
+    <%= form.label :currency %>
+    <%= form.text_field :currency %>
+  </div>
+
+  <div>
+    <%= form.label :value %>
+    <%= form.text_field :value %>
+  </div>
+
+  <div>
+    <%= form.submit 'Submit' %>
+  </div>
+<% end %>

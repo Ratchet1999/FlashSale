@@ -9,12 +9,15 @@ class User < ApplicationRecord
   has_many :orders
   has_many :payments, through: :orders
   has_many :addresses, dependent: :destroy
+  has_and_belongs_to_many :coupons, join_table: 'user_coupons'
+
   has_secure_token :auth_token
 
   validates :first_name, presence: true
 
   after_create :generate_auth_token
   
+  scope :active,->{ where.not(discarded_at: nil) }
   scope :customers_orders, ->(from = Date.current, to = Date.current){ joins(:orders).where('DATE(order_at) BETWEEN ? AND ?', from, to).where(orders: { status: 'delivered' }).group(:id).reselect('users.*, SUM(orders.net_in_cents) as total_amount') }
   scope :orders_by_email, ->{ includes(:orders).where(status: 'delivered') }
 

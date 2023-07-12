@@ -31,4 +31,8 @@ module ApplicationHelper
       price_in_dollar(price)
     end
   end
+
+  def convert_to_currency(price, currency)
+    price / Currency.current_rate[currency].to_f
+  end
 end
