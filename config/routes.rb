@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :addresses, only: [:new, :create]
+  resources :addresses, only: [:new, :create, :edit, :update]
 
   resources :orders do
     member do
