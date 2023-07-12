@@ -23,10 +23,15 @@ Rails.application.routes.draw do
       get 'cancel_payment', as: 'cancel_payment'
       get 'success'
       get 'checkout'
-      get 'cart' 
+      get 'cart'
+      get 'wishlist' 
       patch 'checkout'
       post 'add_to_cart'
       post 'remove_from_cart'
+      post 'add_to_wishlist'
+      post 'remove_from_wishlist'
+      post 'clear_wishlist'
+      post 'move_to_cart'
     end
   end
 

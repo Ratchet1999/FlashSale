@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[show edit update destroy payment success cancel cancel_payment apply_coupon cart]
-  before_action :set_line_item, only: [:remove_from_cart]
-  before_action :set_deal, only: [:add_to_cart]
+  before_action :set_line_item, only: [:remove_from_cart, :remove_from_wishlist, :move_to_cart]
+  before_action :set_deal, only: [:add_to_cart, :add_to_wishlist]
+  before_action :set_wishlist, only: [:add_to_wishlist, :remove_from_wishlist, :wishlist, :clear_wishlist]
 
   def index
     @orders = Order.placed_orders
@@ -44,6 +45,48 @@ class OrdersController < ApplicationController
     if @order.line_items.empty?
       redirect_to root_path, alert: "You have no deals selected"
     end
+  end
+
+  def wishlist
+    if @wishlist.line_items.empty?
+      redirect_to root_path, alert: "You have no deals selected"
+    end
+  end
+
+  def add_to_wishlist
+    if @wishlist.line_items.any?{ |line_item| line_item.deal_id == @deal.id }
+      redirect_to root_path, alert: 'Deal already exist in the wishlist'
+    else
+      @wishlist.line_items.first.destroy if @wishlist.line_items.size == 3
+      @wishlist.line_items.create(
+        deal_id: @deal.id,
+        quantity: 1,
+        discount_price_in_cents: helpers.converted_price(@deal.discount_price_in_cents),
+        price_in_cents: helpers.converted_price(@deal.price_in_cents)
+      )
+      redirect_to root_path, notice: 'Item Added'
+    end
+  end
+
+  def remove_from_wishlist
+    @line_item.destroy
+    redirect_to root_path, notice: 'Item Removed'
+  end
+
+  def clear_wishlist
+    @wishlist.line_items.destroy_all
+
+    redirect_to root_path, alert: "WishList cleared"
+  end
+
+  def move_to_cart
+    if Deal.find(@line_item.deal_id).quantity.zero?
+      flash[:alert] = 'Deal is out of stock'
+    else
+      @line_item.update(order_id: params[:order_id].to_i)
+    end
+
+    redirect_back fallback_location: root_path
   end
 
   def add_to_cart
@@ -143,6 +186,10 @@ class OrdersController < ApplicationController
   end
 
   private 
+
+  def set_wishlist
+    @wishlist = Order.includes(line_items: { deal: { deal_images: { image_attachment: :blob } } }).where(id: user_wishlist).first
+  end
 
   def set_order
     @order = Order.includes(line_items: { deal: { deal_images: { image_attachment: :blob } } }).where(id: params[:id]).first

@@ -1,7 +1,5 @@
 class Order < ApplicationRecord
-  include ApplicationHelper
-
-  enum :status, { in_progress: 0, placed: 1, delivered: 2, cancelled: 3 }
+  enum :status, { in_progress: 0, placed: 1, delivered: 2, cancelled: 3, wishlist: 4 }
   
   belongs_to :user
   belongs_to :address, optional: true

@@ -12,6 +12,7 @@
     <button disabled>Sold Out</button>
   <% else %>
     <%= button_to 'Buy', add_to_cart_order_path(deal), id: "deal_button_#{deal.id}" %>
+    <%= button_to 'Add To Wishlist', add_to_wishlist_order_path(deal) %>
   <% end %>
   </br>
 <% end %>
