@@ -1,10 +1,11 @@
 class StripeHandler
   attr_accessor :messages
 
-  def initialize(success_order_url: nil, cancel_payment_order_url: nil, order:)
+  def initialize(success_order_url: nil, cancel_payment_order_url: nil, order:, currency:)
     @success_url = success_order_url
     @cancel_url = cancel_payment_order_url
     @order = order
+    @currency = currency
     @messages = {}
   end
 
@@ -41,7 +42,7 @@ class StripeHandler
     @order.line_items.map do |line_item|
       { quantity: 1,
         price_data: {
-          currency: 'inr',
+          currency: @currency,
           unit_amount: line_item.net_in_cents,
           product_data: { 
             name: line_item.deal.title 

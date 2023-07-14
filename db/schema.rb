@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_01_105804) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_06_132451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_105804) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "currencies", force: :cascade do |t|
+    t.json "conversion_rates"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "deal_images", force: :cascade do |t|
@@ -105,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_105804) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "currency"
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -150,6 +158,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_105804) do
     t.string "auth_token"
     t.datetime "deactivated_at"
     t.datetime "discarded_at"
+    t.string "currency_preference", default: "dollar"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true

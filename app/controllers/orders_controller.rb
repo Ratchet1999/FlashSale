@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[show edit update destroy payment success cancel cancel_payment]
+  before_action :set_order, only: %i[show edit update destroy payment success cancel cancel_payment coupon cart]
   before_action :set_line_item, only: [:remove_from_cart]
   before_action :set_deal, only: [:add_to_cart]
 
@@ -41,7 +41,6 @@ class OrdersController < ApplicationController
   end
 
   def cart
-    @order = Order.eager_load(deals: { deal_images: { image_attachment: :blob } } ).where(id: current_order.id).first
     if @order.line_items.empty?
       redirect_to root_path, alert: "You have no deals selected"
     end
@@ -54,8 +53,8 @@ class OrdersController < ApplicationController
       @line_item = current_order.line_items.create(
         deal_id: @deal.id,
         quantity: 1,
-        discount_price_in_cents: @deal.discount_price_in_cents,
-        price_in_cents: @deal.price_in_cents
+        discount_price_in_cents: helpers.converted_price(@deal.discount_price_in_cents),
+        price_in_cents: helpers.converted_price(@deal.price_in_cents)
       )
       @deal.decrement!(:quantity, 1)
       if @deal.quantity.zero?
@@ -96,7 +95,7 @@ class OrdersController < ApplicationController
   end
 
   def payment
-    stripe_session = StripeHandler.new(success_order_url: success_order_url, cancel_payment_order_url: cancel_payment_order_url, order: @order).create_stripe_session
+    stripe_session = StripeHandler.new(success_order_url: success_order_url, cancel_payment_order_url: cancel_payment_order_url, order: @order, currency: current_user.currency_preference).create_stripe_session
     @order.payments.create(session_id: stripe_session.id, currency: stripe_session.currency, status: 'pending', total_amount_in_cents: @order.net_in_cents)
     redirect_to stripe_session.url, allow_other_host: true
   end

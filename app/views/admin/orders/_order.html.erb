@@ -1,6 +1,6 @@
 <td><%= "Order #{order.id}" %></td>
 <td><%= order.address.name %></td>
-<td><%= price_in_currency(order.payments.first.total_amount) %></td>
+<td><%= price_in_user_currency(order.net_total) %></td>
 <td><%= order.status %></td>
 <td><%= link_to 'Order Details', order_path(order) %></td>
 <td><%= button_to 'Set as Delivered?', deliver_admin_order_path(order.id), disabled: (order.delivered? || order.cancelled?), class: "btn btn-primary" %></td>

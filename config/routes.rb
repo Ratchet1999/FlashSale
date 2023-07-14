@@ -53,6 +53,7 @@ Rails.application.routes.draw do
         get 'customers' => :customers
       end
     end
+    resources :currencies, only: [:new, :create, :index]
     resources :users do
       member do
         delete :deactivate

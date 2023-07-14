@@ -9,7 +9,7 @@
 
   <div>
     <strong>Total amount</strong>
-    <%= price_in_currency(order.payments.successful.first.total_amount) %>
+    <%= price_in_user_currency(order.net_total) %>
   </div>
 
   <div>

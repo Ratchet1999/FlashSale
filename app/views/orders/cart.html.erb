@@ -7,27 +7,27 @@
 </br>
 <div>
   <strong>Order Total</strong>
-  <%= price_in_currency(@order.order_total) %>
+  <%= price_in_user_currency(@order.order_total) %>
 </div>
 
 <div>
   <strong>Discount Price</strong>
-  <%= price_in_currency(@order.discount_price) %>
+  <%= price_in_user_currency(@order.discount_price) %>
 </div>
 
 <div>
   <strong>Tax amount</strong>
-  <%= price_in_currency(@order.total_tax) %>
+  <%= price_in_user_currency(@order.total_tax) %>
 </div>
 
 <div>
   <strong>Loyality Bonus</strong>
-  <%= price_in_currency(@order.loyality_bonus) %>
+  <%= price_in_user_currency(@order.loyality_bonus) %>
 </div>
 
 <div>
   <strong>Net Total</strong>
-  <%= price_in_currency(@order.net_total) %>
+  <%= price_in_user_currency(@order.net_total) %>
 </div>
 </br>
 <%= button_to 'Place Order', checkout_order_path(@order), method: :get %>
